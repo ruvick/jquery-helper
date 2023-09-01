@@ -37,6 +37,26 @@ $('.block').slideDown(2000, function () {
 })
 
 
+// При наведении скрывать-показывать блок
+function hideMenu() {
+	$('.headerCustomMenuDropdown').slideUp(600);
+}
+function showMenu() {
+	$('.headerCustomMenuDropdown').slideDown(600);
+}
+$(".header-menu__item").on("mouseover", showMenu);
+$(".headerCustom-main-part").on("mouseleave", hideMenu);
+
+
+// Плавный скролл якорных ссылок
+$(".menu__list").on("click", "a", function (event) {
+	event.preventDefault();
+	let id = $(this).attr('href'),
+		top = $(id).offset().top;
+	$('body,html').animate({ scrollTop: top }, 1500);
+});
+
+
 // AJAX запрос
 // Простеший ajax запрос
 $.ajax({
@@ -47,4 +67,45 @@ $.ajax({
 	succes: fuction(response) {
 	// Обрабатываем ответ
 }
+});
+
+
+// Маска телефона
+// Работает при подключенной библиотеке jquery.inputmask.bundle.js
+var inputmask_phone = { "mask": "+9(999)999-99-99" };
+jQuery("input[type=tel]").inputmask(inputmask_phone);
+
+
+//Валидация телефона + Отправщик
+jQuery(".form__btn").click(function (e) {
+
+	e.preventDefault();
+	let name = $(this).siblings('input[name=name]').val();
+	let email = $(this).siblings('input[name=email]').val();
+	let tel = $(this).siblings('input[name=tel]').val();
+
+	if ((tel == "") || (tel.indexOf("_") > 0)) {
+		$(this).siblings('input[name=tel]').css("background-color", "#ff91a4")
+	} else {
+		let jqXHR = jQuery.post(
+			allAjax.ajaxurl,
+			{
+				action: 'send_work',
+				nonce: allAjax.nonce,
+				name: name,
+				email: email,
+				tel: tel,
+				formsubject: jQuery(this).data("formname"),
+			}
+		);
+
+		jqXHR.done(function (responce) {  //Всегда при удачной отправке переход для страницу благодарности
+			document.location.href = 'http://...ru/stranicza-blagodarnosti/';
+		});
+
+		jqXHR.fail(function (responce) {
+			alert("Произошла ошибка. Попробуйте позднее.");
+		});
+	}
+
 });
