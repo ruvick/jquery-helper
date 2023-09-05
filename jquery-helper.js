@@ -29,6 +29,16 @@ $('.block').click(fuction(e) {
 });
 
 
+// Закрытие по Esc 
+$(document).keydown(function (e) {
+	if (e.keyCode == 27) {
+		//Здесь пишем код
+		popup_close(); //Пример
+		// window.close();
+	}
+});
+
+
 // Анамировано показать блоки с классом .block
 // Обращаемся к коллекции блоков. Пишем slideDown. Указываем скорость. Пишем функцию, внутри которой выполняем нужный код
 $('.block').slideDown(2000, function () {
