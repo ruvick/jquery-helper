@@ -27,6 +27,15 @@ $('.block').toggleClass('className');
 $('.block').click(fuction(e) {
 	// Пишем реакцию на клик
 });
+// Еще вариант 
+$('.catalog-entity-table__icon-zoom').on('click', function () {
+	// Пишем реакцию на клик
+});
+
+// Обработчики событий, через делегирование. Для динамически выводимых элементов
+$('body').on('click', '.block', function () {
+	// Пишем реакцию на клик
+});
 
 
 // Закрытие по Esc 
@@ -37,6 +46,11 @@ $(document).keydown(function (e) {
 		// window.close();
 	}
 });
+
+
+// Смещение страницы при открытии
+$('html, body').animate({ scrollTop: $(document).height() }, 'slow');
+return false;
 
 
 // Анамировано показать блоки с классом .block
